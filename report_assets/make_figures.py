@@ -44,6 +44,32 @@ plt.tight_layout()
 plt.savefig(f'{OUT}/fig_comparison.png', dpi=DPI, bbox_inches='tight')
 plt.close(fig)
 
+# --------------------------------------------- wide variant for the PowerPoint
+fig, axes = plt.subplots(1, 2, figsize=(11.0, 2.9))
+x = np.arange(len(labels))
+axes[0].bar(x - w / 2, base_err, w, label='Commercial baseline', color='#4C72B0')
+axes[0].bar(x + w / 2, wgt_err, w, label='Weighted visit centroid', color='#DD8452')
+axes[0].set_xticks(x); axes[0].set_xticklabels(labels)
+axes[0].set_ylabel('Error (projected metres)')
+axes[0].set_title('Location error by percentile')
+axes[0].legend(fontsize=8, frameon=True)
+for i, (b, g) in enumerate(zip(base_err, wgt_err)):
+    axes[0].text(i - w / 2, b + 18, f'{b:.0f}', ha='center', fontsize=7)
+    axes[0].text(i + w / 2, g + 18, f'{g:.0f}', ha='center', fontsize=7)
+x = np.arange(len(thr))
+axes[1].bar(x - w / 2, base_w, w, label='Commercial baseline', color='#4C72B0')
+axes[1].bar(x + w / 2, wgt_w, w, label='Weighted visit centroid', color='#DD8452')
+axes[1].set_xticks(x); axes[1].set_xticklabels(thr)
+axes[1].set_ylabel('Share of 66 surveyed addresses (%)')
+axes[1].set_title('Share within threshold')
+axes[1].legend(fontsize=8, frameon=True)
+for i, (b, g) in enumerate(zip(base_w, wgt_w)):
+    axes[1].text(i - w / 2, b + 1.2, f'{b:.1f}', ha='center', fontsize=7)
+    axes[1].text(i + w / 2, g + 1.2, f'{g:.1f}', ha='center', fontsize=7)
+plt.tight_layout()
+plt.savefig(f'{OUT}/fig_comparison_wide.png', dpi=DPI, bbox_inches='tight')
+plt.close(fig)
+
 # ---------------------------------------------------------------- outcomes
 outcomes = {
     'address_not_traceable': 957, 'locked_premises': 901, 'met_borrower': 766,
