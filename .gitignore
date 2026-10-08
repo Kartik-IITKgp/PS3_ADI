@@ -1,0 +1,3 @@
+report_assets/preview*/
+*.bak
+__pycache__/
